@@ -62,6 +62,7 @@ public class StaggeredFragment extends Fragment {
 	private String previousUrl;
 	// HOLD THE URL TO MAKE THE API CALL TO
 	private String URL;
+	private static int attemptCount = 0;
 
 	// STORE THE PAGING URL
 	private String pagingURL;
@@ -94,6 +95,11 @@ public class StaggeredFragment extends Fragment {
 			@Override
 			public void onErrorResponse(VolleyError error) {
 				getActivity().setProgressBarIndeterminateVisibility(false);
+				if(attemptCount++ < 4) {
+					getActivity().setProgressBarIndeterminateVisibility(true);
+					loadAPI();
+				}
+				
 				Toast.makeText(getActivity(), 
 	                    "Error, Please Try Again", Toast.LENGTH_LONG).show();
 			}
@@ -137,10 +143,17 @@ public class StaggeredFragment extends Fragment {
 					//TODO handle when urls is null - probably problem with connections
 					((StaggeredAdapter) gridView.getAdapter()).addAll(urls);
 				    ((StaggeredAdapter) gridView.getAdapter()).notifyDataSetChanged();
+				} else {
+					if(attemptCount++ < 4) {
+						getActivity().setProgressBarIndeterminateVisibility(true);
+						loadAPI();
+					}
 				}
 				
 			}
-			getActivity().setProgressBarIndeterminateVisibility(false);
+			if(getActivity() != null) {
+				getActivity().setProgressBarIndeterminateVisibility(false);
+			}
 			//Parcelable state = gridView.onSaveInstanceState();
 			Log.d("posi",currentPosition +" a");
 			
@@ -185,8 +198,8 @@ public class StaggeredFragment extends Fragment {
 			@Override
 			public void onScroll(AbsListView view, int firstVisibleItem,
 					int visibleItemCount, int totalItemCount) {
-				int lastInScreen = firstVisibleItem + visibleItemCount -4;
-		        if ((lastInScreen == (totalItemCount-4)) && !(loadingMore) && lastInScreen > 0 && firstVisibleItem != 0 && visibleItemCount <=10) {
+				int lastInScreen = firstVisibleItem + visibleItemCount;
+		        if ((lastInScreen == (totalItemCount - 8)) && !(loadingMore) && lastInScreen > 0 && firstVisibleItem != 0 && visibleItemCount <=10) {
 		            if (stopLoadingData == false) {
 		                Log.d("trace","First: " + firstVisibleItem +" visible: " + visibleItemCount + "total: " + totalItemCount + " last:" +lastInScreen);
 		            	loadingMore = true;
