@@ -36,9 +36,11 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
 import android.widget.AbsListView;
 import android.widget.AbsListView.OnScrollListener;
 import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.GridView;
 import android.widget.ProgressBar;
 import android.widget.Toast;
@@ -53,7 +55,7 @@ public class StaggeredFragment extends Fragment {
 	private Gson gson;
 	private ProgressBar pBar;
 	private GridView gridView;
-	private StaggeredAdapter adapter;
+	private static StaggeredAdapter adapter;
 	private AbstractHttpClient client;
 	private String nextUrl;
 	private static int photosCounter = 0;
@@ -91,7 +93,7 @@ public class StaggeredFragment extends Fragment {
 		private class ErrorListener implements Response.ErrorListener{
 			@Override
 			public void onErrorResponse(VolleyError error) {
-				pBar.setVisibility(View.GONE);
+				getActivity().setProgressBarIndeterminateVisibility(false);
 				Toast.makeText(getActivity(), 
 	                    "Error, Please Try Again", Toast.LENGTH_LONG).show();
 			}
@@ -104,7 +106,7 @@ public class StaggeredFragment extends Fragment {
 			Pagination pag = tags.getPagination();
 			previousUrl = nextUrl;
 			nextUrl = pag.getNext_url();
-			//urls = new ArrayList<String>();
+			urls = new ArrayList<String>();
 			if (tags.getData() != null) {
 				List<Datum> data = tags.getData();
 				for(Datum item : data) {
@@ -118,35 +120,36 @@ public class StaggeredFragment extends Fragment {
 			}
 			//pBar.setVisibility(View.GONE);
 			//gridView.setVisibility(View.VISIBLE);
-			int margin = getResources().getDimensionPixelSize(R.dimen.margin);
+			//int margin = getResources().getDimensionPixelSize(R.dimen.margin);
 			
 			//gridView.setItemMargin(margin); // set the GridView margin
 			
-			gridView.setPadding(margin, 0, margin, 0); // have the margin on the sides as well 
+			//gridView.setPadding(margin, 0, margin, 0); // have the margin on the sides as well 
 			final int currentPosition = gridView.getLastVisiblePosition();
 	        //pBar.bility(View.GONE);
+			if(adapter == null) {
 				adapter = new StaggeredAdapter(getActivity(), R.id.imageView1, urls);
 				gridView.invalidateViews();
-				gridView.setAdapter(adapter);	
+				gridView.setAdapter(adapter);
+				
+			} else {
+				if(urls !=null && gridView !=null && gridView.getAdapter()!=null) {
+					//TODO handle when urls is null - probably problem with connections
+					((StaggeredAdapter) gridView.getAdapter()).addAll(urls);
+				    ((StaggeredAdapter) gridView.getAdapter()).notifyDataSetChanged();
+				}
+				
+			}
+			getActivity().setProgressBarIndeterminateVisibility(false);
 			//Parcelable state = gridView.onSaveInstanceState();
 			Log.d("posi",currentPosition +" a");
 			
 			//gridView.onRestoreInstanceState(state);
 			//gridView.setDefaultState();
 			//adapter.notifyDataSetChanged();
-			loadingMore = true;
+			loadingMore = false;
 			//
-			gridView.post(new Runnable() {
-			    @Override
-			    public void run() {
-			    	//gridView.clearFocus();
-			    	gridView.setSelection(currentPosition-1);
-			    	gridView.smoothScrollToPosition(currentPosition-1);
-			    	pBar.setVisibility(View.GONE);
-			    	loadingMore = false;
-			    	gridView.clearFocus();
-			    }
-			});
+			
 			//gridView.smoothScrollToPosition(currentPosition+1);
 			//gridView.loadMoreCompleated();
 			//gridView.setOnLoadMoreListener(null);
@@ -154,7 +157,7 @@ public class StaggeredFragment extends Fragment {
 		}
 		
 	private boolean loadAPI() {
-	        String url = nextUrl != null ? nextUrl : "https://api.instagram.com/v1/tags/food/media/recent?client_id=a2f63ac8fadb4fffb5a75efb4cd6c917";
+	        String url = nextUrl != null ? nextUrl : "https://api.instagram.com/v1/tags/barczewo/media/recent?client_id=a2f63ac8fadb4fffb5a75efb4cd6c917";
 	        searchRequest = new JsonObjectRequest(Request.Method.GET, url, null, new ResponseListener(), new ErrorListener());
 	        client = new DefaultHttpClient();
 	        queue = Volley.newRequestQueue(getActivity(), new HttpClientStack(client));
@@ -167,7 +170,6 @@ public class StaggeredFragment extends Fragment {
 		super.onActivityCreated(savedInstanceState);
 		MyApplication app = new MyApplication();
 		gridView = (GridView) getView().findViewById(R.id.staggeredGridView1);
-		pBar = (ProgressBar) getView().findViewById(R.id.progressBar1);
 		
 		//pBar.setVisibility(View.VISIBLE);
 		//gridView.setVisibility(View.GONE);
@@ -183,17 +185,19 @@ public class StaggeredFragment extends Fragment {
 			@Override
 			public void onScroll(AbsListView view, int firstVisibleItem,
 					int visibleItemCount, int totalItemCount) {
-				int lastInScreen = firstVisibleItem + visibleItemCount;
-		        if ((lastInScreen == totalItemCount) && !(loadingMore) && lastInScreen != 0 && firstVisibleItem != 0 && visibleItemCount <=10) {
+				int lastInScreen = firstVisibleItem + visibleItemCount -4;
+		        if ((lastInScreen == (totalItemCount-4)) && !(loadingMore) && lastInScreen > 0 && firstVisibleItem != 0 && visibleItemCount <=10) {
 		            if (stopLoadingData == false) {
 		                Log.d("trace","First: " + firstVisibleItem +" visible: " + visibleItemCount + "total: " + totalItemCount + " last:" +lastInScreen);
 		            	loadingMore = true;
+		            	getActivity().setProgressBarIndeterminateVisibility(true);
 		                loadAPI();
 		            }
 
 		        }
 		    }
 		});
+		getActivity().setProgressBarIndeterminateVisibility(true);
 		loadAPI();
 		//ridView.setOnLoadMoreListener(loadMoreListener);
 	}

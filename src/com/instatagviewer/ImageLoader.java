@@ -21,6 +21,7 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Handler;
+import android.util.Log;
 import android.widget.ImageView;
 
 /**
@@ -47,8 +48,10 @@ public class ImageLoader {
     {
         imageViews.put(imageView, url);
         Bitmap bitmap=memoryCache.get(url);
-        if(bitmap!=null)
+        if(bitmap!=null) {
+        	Log.d("mem","Uzyto memory cache!");
             imageView.setImageBitmap(bitmap);
+        }
         else
         {
             queuePhoto(url, imageView);
