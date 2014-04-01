@@ -99,14 +99,14 @@ public class MainActivity extends Activity implements OnNavigationListener {
         }
 	}
 	private class SlideMenuClickListener implements
-    ListView.OnItemClickListener {
-	 @Override
-	 public void onItemClick(AdapterView<?> parent, View view, int position,
-	         long id) {
-	     // display view for selected nav drawer item
-	     displayView(position);
-	 }
-}
+    	ListView.OnItemClickListener {
+		@Override
+		public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+			displayView(position);
+			view.get
+		}
+	}
+	
 	private void displayView(int position) {
         // update the main content by replacing fragments
 		switch(position) {

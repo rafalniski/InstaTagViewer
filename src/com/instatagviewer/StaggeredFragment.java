@@ -31,7 +31,6 @@ import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Parcelable;
-import android.transition.Visibility;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -176,7 +175,7 @@ public class StaggeredFragment extends Fragment {
 	        queue = Volley.newRequestQueue(getActivity(), new HttpClientStack(client));
 			queue.add(searchRequest);
 			return true;
-	    }
+	}
 	@Override
 	public void onActivityCreated(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
