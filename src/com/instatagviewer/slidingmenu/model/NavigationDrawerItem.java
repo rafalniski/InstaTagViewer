@@ -4,13 +4,15 @@ public class NavigationDrawerItem {
 	private String title;
     private int icon;
     private String count = "0";
+    private int id;
     private boolean isCounterVisible = false;
      
     public NavigationDrawerItem(){}
  
-    public NavigationDrawerItem(String title, int icon){
+    public NavigationDrawerItem(String title, int icon, int id){
         this.title = title;
         this.icon = icon;
+        this.setId(id);
     }
      
     public NavigationDrawerItem(String title, int icon, boolean isCounterVisible, String count){
@@ -51,4 +53,12 @@ public class NavigationDrawerItem {
     public void setCounterVisibility(boolean isCounterVisible){
         this.isCounterVisible = isCounterVisible;
     }
+
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
 }

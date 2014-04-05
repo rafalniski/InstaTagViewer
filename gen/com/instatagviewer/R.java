@@ -153,20 +153,24 @@ public final class R {
         public static final int calendar33=0x7f020001;
         public static final int counter_bg=0x7f020002;
         public static final int day1=0x7f020003;
-        public static final int ic_action_refresh=0x7f020004;
-        public static final int ic_launcher=0x7f020005;
-        public static final int ic_navigation_drawer=0x7f020006;
-        public static final int icon=0x7f020007;
-        public static final int list_item_bg_normal=0x7f020008;
-        public static final int list_item_bg_pressed=0x7f020009;
-        public static final int list_selector=0x7f02000a;
-        public static final int list_task_selector=0x7f02000b;
-        public static final int send1=0x7f02000c;
-        public static final int stub=0x7f02000d;
-        public static final int wall1=0x7f02000e;
+        public static final int edittags=0x7f020004;
+        public static final int hash=0x7f020005;
+        public static final int ic_action_new=0x7f020006;
+        public static final int ic_action_refresh=0x7f020007;
+        public static final int ic_action_remove=0x7f020008;
+        public static final int ic_launcher=0x7f020009;
+        public static final int ic_navigation_drawer=0x7f02000a;
+        public static final int icon=0x7f02000b;
+        public static final int list_item_bg_normal=0x7f02000c;
+        public static final int list_item_bg_pressed=0x7f02000d;
+        public static final int list_selector=0x7f02000e;
+        public static final int list_task_selector=0x7f02000f;
+        public static final int send1=0x7f020010;
+        public static final int stub=0x7f020011;
+        public static final int wall1=0x7f020012;
     }
     public static final class id {
-        public static final int action_settings=0x7f0a0010;
+        public static final int action_add=0x7f0a0010;
         public static final int button1=0x7f0a000d;
         public static final int content=0x7f0a0009;
         public static final int counter=0x7f0a0007;
@@ -177,6 +181,7 @@ public final class R {
         public static final int imageView1=0x7f0a000e;
         public static final int list=0x7f0a000c;
         public static final int list_slidermenu=0x7f0a0004;
+        public static final int menu_delete=0x7f0a0011;
         public static final int pager=0x7f0a0000;
         public static final int pager_title_strip=0x7f0a0001;
         public static final int section_label=0x7f0a0008;
@@ -192,11 +197,15 @@ public final class R {
         public static final int fragment_screen_slide_image=0x7f030004;
         public static final int item=0x7f030005;
         public static final int main=0x7f030006;
-        public static final int row_staggered_demo=0x7f030007;
-        public static final int staggered_fragment=0x7f030008;
+        public static final int row_navigation_drawer=0x7f030007;
+        public static final int row_staggered_demo=0x7f030008;
+        public static final int staggered_fragment=0x7f030009;
+        public static final int tags_manager_fragment=0x7f03000a;
+        public static final int tags_manager_list=0x7f03000b;
     }
     public static final class menu {
         public static final int main=0x7f090000;
+        public static final int tag_modify=0x7f090001;
     }
     public static final class string {
         public static final int action_settings=0x7f040002;

@@ -40,16 +40,14 @@ public class TagsContract {
 	
 	public static abstract class TagEntry implements BaseColumns {
 		public static final String TABLE_NAME = "tags";
-        public static final String COLUMN_NAME_TAG_ID = "tagid";
         public static final String COLUMN_NAME_TITLE = "title";
         public static final String COLUMN_NAME_IS_FAV = "is_fav";
 	}
-	public static final String TEXT_TYPE = " TEXT";
+	public static final String TEXT_TYPE = " TEXT ";
 	public static final String COMMA_SEP = ",";
 	public static final String SQL_CREATE_ENTRIES =
-	    "CREATE TABLE " + TagEntry.TABLE_NAME + " (" +
-	    TagEntry._ID + 					"INTEGER PRIMARY KEY," 			  +
-	    TagEntry.COLUMN_NAME_TAG_ID + 	TEXT_TYPE + 			COMMA_SEP +
+	    "CREATE TABLE " + TagEntry.TABLE_NAME + " ( " +
+	    TagEntry._ID + 					" INTEGER PRIMARY KEY AUTOINCREMENT," 			  +
 	    TagEntry.COLUMN_NAME_TITLE + 		TEXT_TYPE + 			COMMA_SEP +
 	    TagEntry.COLUMN_NAME_IS_FAV + 	TEXT_TYPE + 			
 	    ")";

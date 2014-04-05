@@ -8,7 +8,8 @@
     <string name="title_section3">Section 3</string>
 
     <string-array name="nav_drawer_items">
-        <item >Random Tag</item>
+        <item>Manage tags</item>
+        <item>#swag</item>
     </string-array>
     <string name="client_id">a2f63ac8fadb4fffb5a75efb4cd6c917</string>
     <string name="client_secret">ddbb146ef1764197929b05d0b52d2d4f</string>

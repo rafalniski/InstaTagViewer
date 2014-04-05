@@ -23,7 +23,6 @@
         android:layout_height="match_parent"
         android:layout_gravity="start"
         android:choiceMode="singleChoice"
-        
         android:listSelector="@drawable/list_selector"
         android:background="@color/black"
         android:paddingTop="?android:attr/actionBarSize"/>

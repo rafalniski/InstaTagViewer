@@ -1,9 +1,11 @@
 package com.instatagviewer;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import android.app.ActionBar.OnNavigationListener;
 import android.app.Activity;
+import android.app.DialogFragment;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.content.DialogInterface;
@@ -11,9 +13,11 @@ import android.content.DialogInterface.OnClickListener;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.content.res.TypedArray;
+import android.database.Cursor;
 import android.os.Bundle;
 import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v4.widget.DrawerLayout;
+import android.support.v4.widget.SimpleCursorAdapter;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -23,6 +27,7 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 
 import com.instatagviewer.InstagramAuthDialog.DialogListener;
+import com.instatagviewer.TagsContract.TagEntry;
 import com.instatagviewer.slidingmenu.adapter.NavigationDrawerAdapter;
 import com.instatagviewer.slidingmenu.model.NavigationDrawerItem;
 
@@ -33,9 +38,11 @@ public class MainActivity extends Activity implements OnNavigationListener {
 	private DrawerLayout mDrawerLayout;
 	private ListView mDrawerList;
     private TypedArray navMenuIcons;
-    private String[] navMenuTitles;
+    private ArrayList<String> navMenuTitles;
 	private ActionBarDrawerToggle mDrawerToggle;
     private CharSequence mTitle;
+    private DatabaseDataModel db;
+    private int lastClickedPosition = 0;
 
 	
 	// nav drawer title
@@ -47,31 +54,11 @@ public class MainActivity extends Activity implements OnNavigationListener {
 		requestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
-		mTitle = mDrawerTitle = getTitle();
-        navMenuTitles = getResources().getStringArray(R.array.nav_drawer_items);
-        navMenuIcons = getResources()
-                .obtainTypedArray(R.array.nav_drawer_icons);
- 
-        mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
-        mDrawerList = (ListView) findViewById(R.id.list_slidermenu);
-        
-        navDrawerItems = new ArrayList<NavigationDrawerItem>();
- 
-        // adding nav drawer items to array
-        navDrawerItems.add(new NavigationDrawerItem(navMenuTitles[0], navMenuIcons.getResourceId(0, -1)));
-        
- 
-        // Recycle the typed array
-        navMenuIcons.recycle();
- 
-        // setting the nav drawer list adapter
-        adapter = new NavigationDrawerAdapter(getApplicationContext(),
-                navDrawerItems);
-        mDrawerList.setAdapter(adapter);
+		initDrawer();
  
         // enabling action bar app icon and behaving it as toggle button
         getActionBar().setDisplayHomeAsUpEnabled(true);
-        getActionBar().setHomeButtonEnabled(true);
+        //getActionBar().setHomeButtonEnabled(true);
         
         mDrawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout,
                 R.drawable.ic_navigation_drawer,
@@ -79,76 +66,93 @@ public class MainActivity extends Activity implements OnNavigationListener {
                 R.string.app_name
         ){
             public void onDrawerClosed(View view) {
-                getActionBar().setTitle(mTitle);
+                //getActionBar().setTitle(mDrawerTitle);
                 // calling onPrepareOptionsMenu() to show action bar icons
                 invalidateOptionsMenu();
             }
  
             public void onDrawerOpened(View drawerView) {
-                getActionBar().setTitle(mDrawerTitle);
+            	initDrawer();
+            	mDrawerList.setItemChecked(lastClickedPosition, true);
+                mDrawerList.setSelection(lastClickedPosition);
+               // getActionBar().setTitle(mDrawerTitle);
                 // calling onPrepareOptionsMenu() to hide action bar icons
                 invalidateOptionsMenu();
             }
         };
         mDrawerLayout.setDrawerListener(mDrawerToggle);
         mDrawerList.setOnItemClickListener(new SlideMenuClickListener());
-        mDrawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_OPEN);
+        mDrawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED);
         if (savedInstanceState == null) {
-            // on first time display view for first nav item
-            //displayView(0);
+            // on first time display manage tags view, because there no tags
+        	if(navDrawerItems.size() > 1) {
+        		displayView(1,navDrawerItems.get(1).getId());
+        		mDrawerList.setItemChecked(1, true);
+                mDrawerList.setSelection(1);
+        	} else {
+        		
+        		displayView(0,navDrawerItems.get(0).getId());
+        		mDrawerList.setItemChecked(0, true);
+                mDrawerList.setSelection(0);
+        	}
         }
+	}
+	private void initDrawer() {
+		mTitle = mDrawerTitle = getTitle();
+		navMenuTitles = new ArrayList<String>();
+		db = new DatabaseDataModel(this);
+		db.open();
+		List<TagsContract> tags = db.getAllTasks();
+		navDrawerItems = new ArrayList<NavigationDrawerItem>();
+		navMenuTitles.add("Manage Tags");
+		navDrawerItems.add(new NavigationDrawerItem("Manage Tags", R.drawable.edittags,0));
+		for(TagsContract tag : tags) {
+			navMenuTitles.add(tag.getTitle());
+			navDrawerItems.add(new NavigationDrawerItem(tag.getTitle(), R.drawable.hash, Integer.parseInt(tag.get_id())));
+		}
+        mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
+        mDrawerList = (ListView) findViewById(R.id.list_slidermenu);
+        adapter = new NavigationDrawerAdapter(getApplicationContext(),
+                navDrawerItems);
+        mDrawerList.setAdapter(adapter);
 	}
 	private class SlideMenuClickListener implements
     	ListView.OnItemClickListener {
 		@Override
 		public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-			displayView(position);
-			view.get
+			displayView(position, id);
 		}
 	}
-	
-	private void displayView(int position) {
+	public void refreshNav() {
+		
+	}
+	private void displayView(int position, long id) {
         // update the main content by replacing fragments
 		switch(position) {
-		case 4:
-		    final InstagramAuthDialog dialog = new InstagramAuthDialog(this,
-		            new DialogListener() {
-						
-						@Override
-						public void onError(DialogError error) {
-							// TODO Auto-generated method stub
-							
-						}
-						
-						@Override
-						public void onComplete(Bundle values) {
-							 String accessToken = values.getString("access_token");
-							 Log.e("access_token","Access: " + accessToken);
-							
-						}
-						
-						@Override
-						public void onCancel() {
-							// TODO Auto-generated method stub
-							
-						}
-					}, getResources().getString(R.string.client_id), "basic+comments");
-		    dialog.setCancelable(false);
-		    dialog.show();
-		    break;
-		case 0:	 
-			Fragment fragment  = new StaggeredFragment();
+		case 0:
+			Fragment fragment  = new TagsManagerFragment();
+	        if (fragment != null) {
+	            FragmentManager fragmentManager = getFragmentManager();
+	            fragmentManager.beginTransaction()
+	                    .replace(R.id.frame_container, fragment).commit();
+	        }
+			
+			break;
+		default:
+				fragment  = new StaggeredFragment().newInstance(db.getTagName(id));
 		        if (fragment != null) {
 		            FragmentManager fragmentManager = getFragmentManager();
 		            fragmentManager.beginTransaction()
 		                    .replace(R.id.frame_container, fragment).commit();
+		            
 		        }
 		     break;
             
 		}
+		lastClickedPosition = position;
 		mDrawerList.setItemChecked(position, true);
         mDrawerList.setSelection(position);
-        setTitle(navMenuTitles[position]);
+        setTitle(navMenuTitles.get(position));
         mDrawerLayout.closeDrawer(mDrawerList);
     }
 	 @Override
@@ -198,6 +202,7 @@ public class MainActivity extends Activity implements OnNavigationListener {
 		@Override
 		public boolean onPrepareOptionsMenu(Menu menu) {
 			// if nav drawer is opened, hide the action item
+			menu.findItem(R.id.action_add).setVisible(false);
 	        return super.onPrepareOptionsMenu(menu);
 		}
 		@Override

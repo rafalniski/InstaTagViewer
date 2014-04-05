@@ -51,10 +51,23 @@ public class DatabaseDataModel {
 			    return true;
 		  }
 		  
-		  public void deleteTag(String tagID) {
+		  public void deleteTag(long tagID) {
 			    database.delete(TagEntry.TABLE_NAME, TagEntry._ID
 			        + " = " + "\"" + tagID + "\"", null);
 			    
+		  }
+		  public String getTagName(long id) {
+			  Cursor cursor = database.query(TagEntry.TABLE_NAME,
+		    			tagColumns, TagEntry._ID + " = " + String.valueOf(id), null, null, null, null);
+			  if (cursor != null){ 
+				  cursor.moveToFirst();
+				  TagsContract task = cursorToTag(cursor);
+				  cursor.close();
+				  return task.getTitle();
+			  } else {
+				  return null;
+			  }
+		    
 		  }
 		  
 		  private TagsContract cursorToTag(Cursor cursor) {
@@ -68,7 +81,12 @@ public class DatabaseDataModel {
 			  return null;
 			  
 		  }
-		  
+		  public Cursor getAllTasksInCursor() {
+			  Cursor cursor = database.query(TagEntry.TABLE_NAME,
+		    			tagColumns, null, null, null, null, null);
+			  cursor.moveToFirst();
+			  return cursor;
+		  }
 		  public List<TagsContract> getAllTasks() {
 			    List<TagsContract> tags = new ArrayList<TagsContract>();
 			    Cursor cursor = database.query(TagEntry.TABLE_NAME,
@@ -82,5 +100,5 @@ public class DatabaseDataModel {
 			    // make sure to close the cursor
 			    cursor.close();
 			    return tags;
-			  }
+		  }
 }

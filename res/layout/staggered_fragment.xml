@@ -2,7 +2,8 @@
     android:id="@+id/content"
     android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    >
 
    <GridView
        android:id="@+id/staggeredGridView1"
@@ -10,7 +11,7 @@
        android:layout_height="0dp"
        android:layout_weight="8"
        android:numColumns="2"
-       android:paddingTop="?android:attr/actionBarSize" >
+       android:paddingTop="?android:attr/actionBarSize">
 
     </GridView>
     

@@ -65,6 +65,7 @@ public class StaggeredFragment extends Fragment {
 
 	// STORE THE PAGING URL
 	private String pagingURL;
+	private String tagName = "food";
 
 	// FLAG FOR CURRENT PAGE
 	int current_page = 1;
@@ -75,13 +76,23 @@ public class StaggeredFragment extends Fragment {
 	Boolean stopLoadingData = false;
 	
 	public StaggeredFragment() {
-		// TODO Auto-generated constructor stub
+
 	}
 	
+	public StaggeredFragment newInstance(String tagName) {
+		StaggeredFragment f = new StaggeredFragment();
+		Bundle args = new Bundle();
+		args.putString("tagName", tagName);
+		f.setArguments(args);
+		return f;
+	}
 	 @Override
 	public void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
+		if(getArguments()!=null) {
+			tagName = getArguments().getString("tagName");
+		}
 	}
 	private class ResponseListener implements Response.Listener<JSONObject>{
 			@Override
@@ -138,15 +149,16 @@ public class StaggeredFragment extends Fragment {
 				gridView.setAdapter(adapter);
 				
 			} else {
-				if(urls !=null && gridView !=null && gridView.getAdapter()!=null) {
+				if(urls !=null && gridView !=null && gridView.getAdapter() != null) {
 					//TODO handle when urls is null - probably problem with connections
 					((StaggeredAdapter) gridView.getAdapter()).addAll(urls);
 				    ((StaggeredAdapter) gridView.getAdapter()).notifyDataSetChanged();
-				} else {
-					if(attemptCount++ < 4) {
-						getActivity().setProgressBarIndeterminateVisibility(true);
-						loadAPI();
-					}
+				    
+				} else if(gridView.getAdapter() == null) {
+					getActivity().setProgressBarIndeterminateVisibility(true);
+					adapter = new StaggeredAdapter(getActivity(), R.id.imageView1, urls);
+					gridView.invalidateViews();
+					gridView.setAdapter(adapter);
 				}
 				
 			}
@@ -169,7 +181,7 @@ public class StaggeredFragment extends Fragment {
 		}
 		
 	private boolean loadAPI() {
-	        String url = nextUrl != null ? nextUrl : "https://api.instagram.com/v1/tags/barczewo/media/recent?client_id=a2f63ac8fadb4fffb5a75efb4cd6c917";
+	        String url = nextUrl != null ? nextUrl : "https://api.instagram.com/v1/tags/"+this.tagName+"/media/recent?client_id=a2f63ac8fadb4fffb5a75efb4cd6c917";
 	        searchRequest = new JsonObjectRequest(Request.Method.GET, url, null, new ResponseListener(), new ErrorListener());
 	        client = new DefaultHttpClient();
 	        queue = Volley.newRequestQueue(getActivity(), new HttpClientStack(client));
