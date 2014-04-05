@@ -170,18 +170,19 @@ public final class R {
         public static final int wall1=0x7f020012;
     }
     public static final class id {
-        public static final int action_add=0x7f0a0010;
+        public static final int action_add=0x7f0a0011;
         public static final int button1=0x7f0a000d;
         public static final int content=0x7f0a0009;
         public static final int counter=0x7f0a0007;
         public static final int drawer_layout=0x7f0a0002;
+        public static final int frame=0x7f0a0010;
         public static final int frame_container=0x7f0a0003;
         public static final int icon=0x7f0a0005;
         public static final int image=0x7f0a000a;
         public static final int imageView1=0x7f0a000e;
         public static final int list=0x7f0a000c;
         public static final int list_slidermenu=0x7f0a0004;
-        public static final int menu_delete=0x7f0a0011;
+        public static final int menu_delete=0x7f0a0012;
         public static final int pager=0x7f0a0000;
         public static final int pager_title_strip=0x7f0a0001;
         public static final int section_label=0x7f0a0008;
@@ -202,6 +203,7 @@ public final class R {
         public static final int staggered_fragment=0x7f030009;
         public static final int tags_manager_fragment=0x7f03000a;
         public static final int tags_manager_list=0x7f03000b;
+        public static final int view_pager=0x7f03000c;
     }
     public static final class menu {
         public static final int main=0x7f090000;

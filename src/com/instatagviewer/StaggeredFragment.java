@@ -26,6 +26,7 @@ import com.instatagviewer.JSONmodel.Tags;
 import com.instatagviewer.JSONmodel.Thumbnail;
 
 import android.app.Fragment;
+import android.app.FragmentManager;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.AsyncTask;
@@ -62,6 +63,7 @@ public class StaggeredFragment extends Fragment {
 	// HOLD THE URL TO MAKE THE API CALL TO
 	private String URL;
 	private static int attemptCount = 0;
+	private ArrayList<String> AllUrls  = new ArrayList<String>();
 
 	// STORE THE PAGING URL
 	private String pagingURL;
@@ -127,9 +129,10 @@ public class StaggeredFragment extends Fragment {
 				List<Datum> data = tags.getData();
 				for(Datum item : data) {
 					Images images = item.getImages();
-					Thumbnail res = images.getThumbnail();
+					Standard_resolution res = images.getStandard_resolution();
 					if(res.getUrl() != null) {
 						urls.add(res.getUrl());
+						AllUrls.add(res.getUrl());
 					}
 					//System.out.println("Nr " + i++ + " " + res.getUrl());
 				}
@@ -197,7 +200,21 @@ public class StaggeredFragment extends Fragment {
 		
 		//pBar.setVisibility(View.VISIBLE);
 		//gridView.setVisibility(View.GONE);
-		
+		gridView.setOnItemClickListener(new OnItemClickListener() {
+
+			@Override
+			public void onItemClick(AdapterView<?> parent, View view,
+					int position, long id) {
+				Log.d("click", "Position: " +position + " ID: " + id + "Item: " + adapter.getItem(position));
+				ViewPagerFragment fragment  = new ViewPagerFragment(AllUrls,position);
+		        if (fragment != null) {
+		            FragmentManager fragmentManager = getFragmentManager();
+		            fragmentManager.beginTransaction()
+		                    .replace(R.id.frame_container, fragment).addToBackStack(null).commit();
+				
+		        }
+			}
+		});
 		gridView.setOnScrollListener(new OnScrollListener() {
 			
 			@Override

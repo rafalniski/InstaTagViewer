@@ -11,6 +11,7 @@
        android:layout_height="0dp"
        android:layout_weight="8"
        android:numColumns="2"
+       android:scrollingCache="true"
        android:paddingTop="?android:attr/actionBarSize">
 
     </GridView>
