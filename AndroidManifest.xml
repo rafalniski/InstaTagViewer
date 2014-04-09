@@ -26,6 +26,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+         <activity android:name="com.instatagviewer.ViewPagerFragment"/>
         <activity android:name="com.instatagviewer.ImageActivity"
             android:parentActivityName="com.instatagviewer.MainActivity" 
             >

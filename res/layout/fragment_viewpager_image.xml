@@ -1,0 +1,62 @@
+
+
+    
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:gravity="center"
+    android:orientation="vertical"
+    android:layout_height="fill_parent"
+        >
+
+        <com.instatagviewer.TouchImageView
+            android:id="@+id/imageViewPager"
+            android:layout_width="fill_parent"
+            android:layout_marginTop="0dp"
+            android:layout_height="0dp"
+            android:layout_weight="5"
+            android:src="@drawable/appointment1" />
+        
+        <LinearLayout
+	        android:layout_width="fill_parent"
+	         android:layout_height="0dp"
+            android:layout_weight="1"
+            android:layout_marginTop="@dimen/activity_horizontal_margin"
+            android:layout_marginBottom="@dimen/activity_horizontal_margin"
+	        android:layout_marginLeft="@dimen/activity_horizontal_margin"
+	        android:layout_marginRight="@dimen/activity_horizontal_margin"
+	      >
+
+             <ImageView
+                android:id="@+id/user_photo"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:src="@drawable/calendar33"
+               />
+           
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="10dp"
+                android:layout_marginBottom="10dp"
+                android:orientation="vertical" >
+                 <TextView
+                android:id="@+id/username"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="" />
+                  <TextView
+                android:id="@+id/full_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="" />
+                  
+                   <TextView
+                android:id="@+id/location"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="" />
+            </LinearLayout>
+            
+        </LinearLayout>
+</LinearLayout>

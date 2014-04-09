@@ -2,13 +2,27 @@ package com.instatagviewer;
 
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
-import org.apache.http.client.CookieStore;
-import org.apache.http.cookie.Cookie;
 import org.apache.http.impl.client.AbstractHttpClient;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.json.JSONObject;
+
+import android.app.Fragment;
+import android.content.Intent;
+import android.os.Bundle;
+import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.AbsListView;
+import android.widget.AbsListView.OnScrollListener;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
+import android.widget.GridView;
+import android.widget.ProgressBar;
+import android.widget.Toast;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -20,31 +34,11 @@ import com.android.volley.toolbox.Volley;
 import com.google.gson.Gson;
 import com.instatagviewer.JSONmodel.Datum;
 import com.instatagviewer.JSONmodel.Images;
+import com.instatagviewer.JSONmodel.Likes;
 import com.instatagviewer.JSONmodel.Pagination;
 import com.instatagviewer.JSONmodel.Standard_resolution;
 import com.instatagviewer.JSONmodel.Tags;
-import com.instatagviewer.JSONmodel.Thumbnail;
-
-import android.app.Fragment;
-import android.app.FragmentManager;
-import android.content.Intent;
-import android.net.Uri;
-import android.os.AsyncTask;
-import android.os.Bundle;
-import android.os.Parcelable;
-import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.view.Window;
-import android.widget.AbsListView;
-import android.widget.AbsListView.OnScrollListener;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.GridView;
-import android.widget.ProgressBar;
-import android.widget.Toast;
-import android.widget.AdapterView.OnItemClickListener;
+import com.instatagviewer.JSONmodel.User;
 
 
 public class StaggeredFragment extends Fragment {
@@ -63,6 +57,7 @@ public class StaggeredFragment extends Fragment {
 	// HOLD THE URL TO MAKE THE API CALL TO
 	private String URL;
 	private static int attemptCount = 0;
+	private ArrayList<HashMap<String, String>> imageInfo = new ArrayList<HashMap<String,String>>();
 	private ArrayList<String> AllUrls  = new ArrayList<String>();
 
 	// STORE THE PAGING URL
@@ -128,10 +123,25 @@ public class StaggeredFragment extends Fragment {
 			if (tags.getData() != null) {
 				List<Datum> data = tags.getData();
 				for(Datum item : data) {
-					Images images = item.getImages();
-					Standard_resolution res = images.getStandard_resolution();
+					HashMap<String, String> info = new HashMap<String, String>();
+					Standard_resolution res = item.getImages().getStandard_resolution();
 					if(res.getUrl() != null) {
+						String likes = item.getLikes() != null ? item.getLikes().getCount().toString() : "";
+						String creation_date = item.getCaption() != null ? item.getCaption().getCreated_time() : "";
+						String location = item.getLocation() != null ? item.getLocation().toString() : "";
+						String username = item.getUser() != null ? item.getUser().getUsername() : "";
+						String full_name = item.getUser() != null ? item.getUser().getFull_name() : "";
+						String profile_picture = item.getUser() != null ? item.getUser().getProfile_picture() : "";
+						String text = item.getCaption() != null ? item.getCaption().getText() : "";
+						info.put("likes", likes);
+						info.put("creation_date", creation_date);
+						info.put("location", location);
+						info.put("username", username);
+						info.put("full_name", full_name);
+						info.put("profile_picture", profile_picture);
+						info.put("text", text);
 						urls.add(res.getUrl());
+						imageInfo.add(info);
 						AllUrls.add(res.getUrl());
 					}
 					//System.out.println("Nr " + i++ + " " + res.getUrl());
@@ -156,10 +166,11 @@ public class StaggeredFragment extends Fragment {
 					//TODO handle when urls is null - probably problem with connections
 					((StaggeredAdapter) gridView.getAdapter()).addAll(urls);
 				    ((StaggeredAdapter) gridView.getAdapter()).notifyDataSetChanged();
-				    
+			
 				} else if(gridView.getAdapter() == null) {
 					getActivity().setProgressBarIndeterminateVisibility(true);
 					adapter = new StaggeredAdapter(getActivity(), R.id.imageView1, urls);
+					
 					gridView.invalidateViews();
 					gridView.setAdapter(adapter);
 				}
@@ -168,6 +179,7 @@ public class StaggeredFragment extends Fragment {
 			if(getActivity() != null) {
 				getActivity().setProgressBarIndeterminateVisibility(false);
 			}
+			
 			//Parcelable state = gridView.onSaveInstanceState();
 			Log.d("posi",currentPosition +" a");
 			
@@ -201,18 +213,24 @@ public class StaggeredFragment extends Fragment {
 		//pBar.setVisibility(View.VISIBLE);
 		//gridView.setVisibility(View.GONE);
 		gridView.setOnItemClickListener(new OnItemClickListener() {
-
+ 
 			@Override
 			public void onItemClick(AdapterView<?> parent, View view,
 					int position, long id) {
 				Log.d("click", "Position: " +position + " ID: " + id + "Item: " + adapter.getItem(position));
-				ViewPagerFragment fragment  = new ViewPagerFragment(AllUrls,position);
+				Intent intent = new Intent(getActivity(), ViewPagerFragment.class);
+				intent.putStringArrayListExtra("urls", AllUrls);
+				intent.putExtra("imageInfo", imageInfo);
+				intent.putExtra("position", position);
+				startActivity(intent);
+				/*ViewPagerFragment fragment  = new ViewPagerFragment(AllUrls,position);
 		        if (fragment != null) {
 		            FragmentManager fragmentManager = getFragmentManager();
 		            fragmentManager.beginTransaction()
 		                    .replace(R.id.frame_container, fragment).addToBackStack(null).commit();
-				
-		        }
+				}
+				*/
+		        
 			}
 		});
 		gridView.setOnScrollListener(new OnScrollListener() {
