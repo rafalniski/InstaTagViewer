@@ -28,7 +28,7 @@ public class ViewPagerFragment extends FragmentActivity {
 		urls = getIntent().getExtras().getStringArrayList("urls");
 		position = getIntent().getExtras().getInt("position");
 		imageInfo = (ArrayList<HashMap<String,String>>) getIntent().getSerializableExtra("imageInfo");
-		mAdapter = new MyAdapter(getSupportFragmentManager(),urls, position, imageInfo);
+		mAdapter = new MyAdapter(getSupportFragmentManager(),urls, position, imageInfo, getIntent().getExtras().getString("title"));
 		
         mPager = (ViewPager)findViewById(R.id.frame);
         mPager.setPageTransformer(true, new ZoomOutPageTransformer());

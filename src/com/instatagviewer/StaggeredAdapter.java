@@ -27,31 +27,23 @@ public class StaggeredAdapter extends ArrayAdapter<String> {
 		mLoader = new ImageLoader(context);
 	}
 	
- 
 	@Override
 	public View getView(int position, View convertView, ViewGroup parent) {
-
+		long start = System.currentTimeMillis();
 		ViewHolder holder;
 
 		if (convertView == null) {
 			LayoutInflater layoutInflator = LayoutInflater.from(getContext());
-			convertView = layoutInflator.inflate(R.layout.row_staggered_demo,
-					null);
+			convertView = layoutInflator.inflate(R.layout.row_staggered_demo,null);
 			holder = new ViewHolder();
 			holder.imageView = (ScaleImageView) convertView .findViewById(R.id.imageView1);
 			convertView.setTag(holder);
 		}
-
+		
 		holder = (ViewHolder) convertView.getTag();
-		//DisplayImageOptions defaultOptions = new DisplayImageOptions.Builder()
-		//.cacheInMemory(true)
-        //.cacheOnDisc(true)
-        //.build();
-		//com.nostra13.universalimageloader.core.ImageLoader imageLoader = com.nostra13.universalimageloader.core.ImageLoader.getInstance();
-		//imageLoader.init(ImageLoaderConfiguration.createDefault(getContext()));
-		//imageLoader.displayImage(getItem(position), holder.imageView, defaultOptions);
 		mLoader.DisplayImage(getItem(position), holder.imageView);
-
+		long elapsedTimeMillis = System.currentTimeMillis()-start;
+		Log.d("czas", "Czas wykonania: " + elapsedTimeMillis/1000F);
 		return convertView;
 	}
 

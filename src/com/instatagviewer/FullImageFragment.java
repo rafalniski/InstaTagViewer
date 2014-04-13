@@ -1,6 +1,9 @@
 package com.instatagviewer;
 
 import java.io.IOException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
@@ -12,6 +15,7 @@ import android.location.Location;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.text.method.ScrollingMovementMethod;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -25,11 +29,12 @@ public class FullImageFragment extends Fragment {
 	private ImageLoader mLoader;
 	private HashMap<String, String> imageInfo;
 	private TextView location;
-	static FullImageFragment newInstance(String url, HashMap<String, String> imageInfo) {
+	static FullImageFragment newInstance(String url, HashMap<String, String> imageInfo, String title) {
         FullImageFragment f = new FullImageFragment();
         // Supply num input as an argument.
         Bundle args = new Bundle();
         args.putString("url", url);
+        args.putString("title", title);
         args.putSerializable("imageInfo", imageInfo);
         f.setArguments(args);
 
@@ -43,6 +48,7 @@ public class FullImageFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         imageUrl = getArguments() != null ? getArguments().getString("url") : "";
+        getActivity().setTitle("#" + getArguments() != null ? getArguments().getString("title") : getResources().getString(R.string.app_name));
         imageInfo = (HashMap<String, String>) (getArguments() != null ? getArguments().getSerializable("imageInfo") : null);
         mLoader = new ImageLoader(getActivity());
     }
@@ -57,18 +63,36 @@ public class FullImageFragment extends Fragment {
         View v = inflater.inflate(R.layout.fragment_viewpager_image, container, false);
         ImageView image = (ImageView) v.findViewById(R.id.imageViewPager);
         ImageView user_image = (ImageView) v.findViewById(R.id.user_photo);
+        TextView imageText = (TextView) v.findViewById(R.id.text);
         TextView user_nickname = (TextView) v.findViewById(R.id.username);
+        TextView image_date = (TextView) v.findViewById(R.id.time);
         location = (TextView) v.findViewById(R.id.location);
         TextView user_full_name = (TextView) v.findViewById(R.id.full_name);
         user_nickname.setText("@" + imageInfo.get("username"));
         user_full_name.setText(imageInfo.get("full_name"));
+        String creation_time = imageInfo.get("creation_date");
+        Log.d("long", imageInfo.get("creation_date") + "przeddupa");
+        if(!creation_time.isEmpty()) {
+        	Log.d("long", imageInfo.get("creation_date") + "dupa");
+        	
+		        Date currentDate = new Date(Long.parseLong(imageInfo.get("creation_date"))*1000);
+		        DateFormat df = new SimpleDateFormat("dd/MM/yy HH:mm:ss");
+		        image_date.setText(df.format(currentDate));
+        	//} catch (NumberFormatException e) {
+        		//e.printStackTrace();
+        		//image_date.setVisibility(View.GONE);
+        	//}
+	       
+	        imageText.setMovementMethod(new ScrollingMovementMethod());
+	        imageText.setText(imageInfo.get("text"));
+        }
         Log.d("info", "Info: Likes: " + imageInfo.get("likes") + " Username: "+ imageInfo.get("username"));
         
         mLoader.DisplayImage(imageUrl,image);
         mLoader.DisplayImage(imageInfo.get("profile_picture"),user_image);
         String location = imageInfo.get("location");
         Log.d("loca","Raw location: " + location);
-        if(location.length() > 0 && location.length() < 50) {
+        if(location.length() > 20 && location.length() < 50) {
         	Log.d("loca",location);
 	        location = location.substring(1,location.length()-1);
 	        Location mLocation = new Location("");
@@ -86,6 +110,8 @@ public class FullImageFragment extends Fragment {
 	        mLocation.setLatitude(latitude);
 	        mLocation.setLongitude(longitude);
 	        new GetAddressTask(getActivity()).execute(mLocation);
+        } else {
+        	this.location.setVisibility(View.GONE);
         }
         return v;
     }
