@@ -9,13 +9,13 @@
     android:paddingTop="?android:attr/actionBarSize"
         >
 
-        <com.instatagviewer.TouchImageView
+        <com.instatagger.views.TouchImageView
             android:id="@+id/imageViewPager"
             android:layout_width="fill_parent"
            
             android:layout_height="0dp"
             android:layout_weight="3"
-            android:src="@drawable/loading_text" />
+            />
         
         <LinearLayout
 	        android:layout_width="fill_parent"
@@ -30,12 +30,12 @@
              <TextView
                 android:id="@+id/text"
                 android:scrollbars = "vertical"
-                android:maxLines="7"
+                android:maxLines="4"
                 android:layout_width="wrap_content"
                 android:layout_marginBottom="10dp"
                 android:layout_height="wrap_content"
                 android:text="" />
-               />
+               
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
@@ -47,7 +47,7 @@
                 android:layout_width="100dp"
                 android:layout_height="100dp"
                 android:layout_marginRight="10dp"
-                android:src="@drawable/calendar33" />
+                />
                 <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -59,6 +59,11 @@
 	                android:text="" />
 	                 <TextView
                 android:id="@+id/full_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="" />
+	                  <TextView
+                android:id="@+id/likes"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="" />

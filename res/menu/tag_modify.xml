@@ -4,7 +4,7 @@
     android:id="@+id/menu_delete"
     android:orderInCategory="100"
     android:showAsAction="ifRoom|withText"
-    android:title="Delete"
+    android:title="@string/delete"
     android:icon="@drawable/ic_action_remove"/>
 
 

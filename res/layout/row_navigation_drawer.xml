@@ -11,7 +11,6 @@
         android:layout_alignParentLeft="true"
         android:layout_marginLeft="12dp"
         android:layout_marginRight="12dp"
-        android:contentDescription="Icon"
         android:src="@drawable/hash"
         android:layout_centerVertical="true" />
  
