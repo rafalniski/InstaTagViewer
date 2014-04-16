@@ -25,9 +25,10 @@ import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.instatagger.R;
 import com.instatagger.database.DatabaseDataModel;
 import com.instatagger.database.TagsContract.TagEntry;
-import com.instatagviewer.R;
+import com.instatagger.utils.Utils;
 
 public class TagsManagerFragment extends ListFragment {
 
@@ -49,32 +50,34 @@ public class TagsManagerFragment extends ListFragment {
 	}
 
 	private void setList() {
-		Cursor mCursor = db.getAllTasksInCursor();
-		SimpleCursorAdapter adapter = null;
-		try {
-			adapter = new SimpleCursorAdapter(getActivity(),
-					android.R.layout.simple_list_item_1, mCursor,
-					new String[] { TagEntry.COLUMN_NAME_TITLE },
-					new int[] { android.R.id.text1 }, 1);
-		} catch (NullPointerException e) {
-			e.printStackTrace();
-		}
-		adapter.setViewBinder(new ViewBinder() {
-
-			@Override
-			public boolean setViewValue(View aView, Cursor aCursor,
-					int aColumnIndex) {
-				if (aColumnIndex == 1) {
-					String tagTitle = aCursor.getString(aColumnIndex);
-					TextView textView = (TextView) aView;
-					textView.setText("#" + tagTitle);
-					return true;
-
-				}
-				return false;
+		if(getActivity() != null) {
+			Cursor mCursor = db.getAllTasksInCursor();
+			SimpleCursorAdapter adapter = null;
+			try {
+				adapter = new SimpleCursorAdapter(getActivity(),
+						android.R.layout.simple_list_item_1, mCursor,
+						new String[] { TagEntry.COLUMN_NAME_TITLE },
+						new int[] { android.R.id.text1 }, 1);
+			} catch (NullPointerException e) {
+				e.printStackTrace();
 			}
-		});
-		setListAdapter(adapter);
+			adapter.setViewBinder(new ViewBinder() {
+	
+				@Override
+				public boolean setViewValue(View aView, Cursor aCursor,
+						int aColumnIndex) {
+					if (aColumnIndex == 1) {
+						String tagTitle = aCursor.getString(aColumnIndex);
+						TextView textView = (TextView) aView;
+						textView.setText("#" + tagTitle);
+						return true;
+	
+					}
+					return false;
+				}
+			});
+			setListAdapter(adapter);
+		}
 	}
 
 	@Override
@@ -106,8 +109,8 @@ public class TagsManagerFragment extends ListFragment {
 	}
 
 	public void onDialogClicked(String value) {
-		if (value == null) {
-			// inform user that he's naughty
+		if (value.isEmpty()) {
+			Utils.showCustomToast(getActivity().getResources().getString(R.string.empty_tag),getActivity());
 		} else {
 			// add to database
 			db.addTag(value);

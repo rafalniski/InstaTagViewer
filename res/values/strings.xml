@@ -12,6 +12,7 @@
     <string name="user_photo_descriptor">User photo</string>
     <string name="no_internet_connection">No internet connection</string>
     <string name="bad_tag">This Tag doesn\'t exists or is restricted</string>
+    <string name="empty_tag">Please, fill it with any text</string>
     <string name="valid_internet_connection">Successfully connected to the internet</string>
     
 

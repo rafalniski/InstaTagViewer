@@ -31,13 +31,13 @@ import com.android.volley.toolbox.HttpClientStack;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.google.gson.Gson;
+import com.instatagger.R;
 import com.instatagger.JSONmodel.Datum;
 import com.instatagger.JSONmodel.Pagination;
 import com.instatagger.JSONmodel.Standard_resolution;
 import com.instatagger.JSONmodel.Tags;
 import com.instatagger.fragments.adapters.StaggeredAdapter;
 import com.instatagger.utils.Utils;
-import com.instatagviewer.R;
 
 public class StaggeredFragment extends Fragment {
 	private class ErrorListener implements Response.ErrorListener {

@@ -26,8 +26,8 @@ import com.instatagger.fragments.TagsManagerFragment;
 import com.instatagger.slidingmenu.adapter.NavigationDrawerAdapter;
 import com.instatagger.slidingmenu.model.NavigationDrawerItem;
 import com.instatagger.utils.Utils;
-import com.instatagviewer.R;
 import com.mattyork.colours.Colour;
+import com.parse.ParseAnalytics;
 
 public class MainActivity extends Activity implements OnNavigationListener {
 
@@ -123,6 +123,7 @@ public class MainActivity extends Activity implements OnNavigationListener {
 		requestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
+		ParseAnalytics.trackAppOpened(getIntent());
 		initDrawer();
 
 		// enabling action bar app icon and behaving it as toggle button

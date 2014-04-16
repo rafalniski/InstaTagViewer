@@ -2,16 +2,16 @@ package com.instatagger.fragments.adapters;
 
 import java.util.ArrayList;
 
-import com.instatagger.utils.ImageLoader;
-import com.instatagger.views.ScaleImageView;
-import com.instatagviewer.R;
-
 import android.content.Context;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+
+import com.instatagger.R;
+import com.instatagger.utils.ImageLoader;
+import com.instatagger.views.ScaleImageView;
 
 public class StaggeredAdapter extends ArrayAdapter<String> {
 

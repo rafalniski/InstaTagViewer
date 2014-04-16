@@ -3,15 +3,15 @@ package com.instatagger.fragments;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-import com.instatagger.fragments.adapters.FullImageAdapter;
-import com.instatagger.utils.ZoomOutPageTransformer;
-import com.instatagviewer.R;
-
 import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.view.ViewPager;
 import android.view.MenuItem;
+
+import com.instatagger.R;
+import com.instatagger.fragments.adapters.FullImageAdapter;
+import com.instatagger.utils.ZoomOutPageTransformer;
 
 @SuppressLint("ValidFragment")
 public class ViewPagerFragment extends FragmentActivity {

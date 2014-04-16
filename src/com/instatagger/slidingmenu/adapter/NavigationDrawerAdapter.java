@@ -11,8 +11,8 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.instatagger.R;
 import com.instatagger.slidingmenu.model.NavigationDrawerItem;
-import com.instatagviewer.R;
 
 public class NavigationDrawerAdapter extends BaseAdapter {
 	private Context context;

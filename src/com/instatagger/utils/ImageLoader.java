@@ -55,7 +55,7 @@ public class ImageLoader {
 			imageView
 					.setImageDrawable(context.getResources().getDrawable(
 							context.getResources().getIdentifier(
-									"com.instatagviewer:drawable/loading",
+									"com.instatagger:drawable/loading",
 									null, null)));
 		}
 	}

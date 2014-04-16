@@ -5,7 +5,7 @@
  * should not be modified by hand.
  */
 
-package com.instatagviewer;
+package com.instatagger;
 
 public final class R {
     public static final class attr {
@@ -285,6 +285,7 @@ public final class R {
         public static final int bad_tag=0x7f07000b;
         public static final int delete=0x7f070004;
         public static final int drawer_list_icon_description=0x7f070008;
+        public static final int empty_tag=0x7f07000c;
         public static final int hello=0x7f070000;
         public static final int no_internet_connection=0x7f07000a;
         public static final int refresh=0x7f070003;
@@ -292,7 +293,7 @@ public final class R {
         public static final int title_section2=0x7f070006;
         public static final int title_section3=0x7f070007;
         public static final int user_photo_descriptor=0x7f070009;
-        public static final int valid_internet_connection=0x7f07000c;
+        public static final int valid_internet_connection=0x7f07000d;
     }
     public static final class style {
         /** 

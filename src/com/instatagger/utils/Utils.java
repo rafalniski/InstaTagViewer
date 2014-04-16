@@ -3,13 +3,13 @@ package com.instatagger.utils;
 import java.io.InputStream;
 import java.io.OutputStream;
 
-import com.github.johnpersano.supertoasts.SuperToast;
-import com.github.johnpersano.supertoasts.util.Style;
-import com.instatagviewer.R;
-
 import android.content.Context;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+
+import com.github.johnpersano.supertoasts.SuperToast;
+import com.github.johnpersano.supertoasts.util.Style;
+import com.instatagger.R;
 
 public class Utils {
 	public static final int TYPE_WIFI = 1;
@@ -73,7 +73,12 @@ public class Utils {
 		}
 			
 	}
-	
+	public static void showCustomToast(String message, Context context) {
+		
+		SuperToast.create(context, message , SuperToast.Duration.SHORT, 
+			    Style.getStyle(Style.ORANGE, SuperToast.Animations.FLYIN)).show();
+		
+}
 	public static void showBadTagToast(Context context) {
 		
 			String message = context.getResources().getString(R.string.bad_tag);

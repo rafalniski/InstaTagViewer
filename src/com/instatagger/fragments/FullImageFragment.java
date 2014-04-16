@@ -8,10 +8,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 
-import com.instatagger.utils.ImageLoader;
-import com.instatagviewer.R;
-import com.mattyork.colours.Colour;
-
 import android.content.Context;
 import android.graphics.drawable.ColorDrawable;
 import android.location.Address;
@@ -27,6 +23,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.instatagger.R;
+import com.instatagger.utils.ImageLoader;
+import com.mattyork.colours.Colour;
 
 public class FullImageFragment extends Fragment {
 
