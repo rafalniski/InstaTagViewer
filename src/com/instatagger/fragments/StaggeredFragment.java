@@ -37,6 +37,7 @@ import com.instatagger.JSONmodel.Pagination;
 import com.instatagger.JSONmodel.Standard_resolution;
 import com.instatagger.JSONmodel.Tags;
 import com.instatagger.fragments.adapters.StaggeredAdapter;
+import com.instatagger.utils.Utils;
 import com.instatagviewer.R;
 
 public class StaggeredFragment extends Fragment {
@@ -50,10 +51,6 @@ public class StaggeredFragment extends Fragment {
 
 					loadAPI();
 				}
-
-				Toast.makeText(getActivity(),
-						"Error: " + error.getMessage() + ", Please Try Again",
-						Toast.LENGTH_LONG).show();
 			}
 		}
 	}
@@ -227,18 +224,19 @@ public class StaggeredFragment extends Fragment {
 			public void onScroll(AbsListView view, int firstVisibleItem,
 					int visibleItemCount, int totalItemCount) {
 				int lastInScreen = firstVisibleItem + visibleItemCount;
-				if ((lastInScreen == (totalItemCount - 12)) && !(loadingMore)
-						&& lastInScreen > 0) {
-					if (stopLoadingData == false) {
-						Log.d("trace", "First: " + firstVisibleItem
-								+ " visible: " + visibleItemCount + "total: "
-								+ totalItemCount + " last:" + lastInScreen);
-						loadingMore = true;
-						getActivity().setProgressBarIndeterminateVisibility(
-								true);
-						loadAPI();
+					if ((lastInScreen == (totalItemCount - 12)) && !(loadingMore)
+							&& lastInScreen > 0) {
+						if (stopLoadingData == false) {
+							Log.d("trace", "First: " + firstVisibleItem
+									+ " visible: " + visibleItemCount + "total: "
+									+ totalItemCount + " last:" + lastInScreen);
+							loadingMore = true;
+							getActivity().setProgressBarIndeterminateVisibility(
+									true);
+							loadAPI();
+						
+	
 					}
-
 				}
 			}
 
@@ -247,9 +245,8 @@ public class StaggeredFragment extends Fragment {
 
 			}
 		});
-
-		getActivity().setProgressBarIndeterminateVisibility(true);
-		loadAPI();
+			getActivity().setProgressBarIndeterminateVisibility(true);
+			loadAPI();
 
 		// ridView.setOnLoadMoreListener(loadMoreListener);
 	}

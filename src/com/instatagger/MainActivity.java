@@ -25,6 +25,7 @@ import com.instatagger.fragments.StaggeredFragment;
 import com.instatagger.fragments.TagsManagerFragment;
 import com.instatagger.slidingmenu.adapter.NavigationDrawerAdapter;
 import com.instatagger.slidingmenu.model.NavigationDrawerItem;
+import com.instatagger.utils.Utils;
 import com.instatagviewer.R;
 import com.mattyork.colours.Colour;
 
@@ -48,26 +49,30 @@ public class MainActivity extends Activity implements OnNavigationListener {
 		}
 	}
 	private void displayView(int position, long id) {
-		switch (position) {
-		case 0:
-			TagsManagerFragment fragment = new TagsManagerFragment();
-			if (fragment != null) {
-				android.app.FragmentManager fragmentManager = getFragmentManager();
-				fragmentManager.beginTransaction()
-						.replace(R.id.frame_container, fragment).commit();
+		if(Utils.getConnectivityStatus(this) != Utils.TYPE_NOT_CONNECTED) {
+			switch (position) {
+			case 0:
+				TagsManagerFragment fragment = new TagsManagerFragment();
+				if (fragment != null) {
+					android.app.FragmentManager fragmentManager = getFragmentManager();
+					fragmentManager.beginTransaction()
+							.replace(R.id.frame_container, fragment).commit();
+				}
+				break;
+			default:
+				Fragment fragmentSecond = new StaggeredFragment().newInstance(db
+						.getTagName(id));
+				if (fragmentSecond != null) {
+					android.app.FragmentManager fragmentManager = getFragmentManager();
+					fragmentManager.beginTransaction()
+							.replace(R.id.frame_container, fragmentSecond).commit();
+	
+				}
+				break;
+	
 			}
-			break;
-		default:
-			Fragment fragmentSecond = new StaggeredFragment().newInstance(db
-					.getTagName(id));
-			if (fragmentSecond != null) {
-				android.app.FragmentManager fragmentManager = getFragmentManager();
-				fragmentManager.beginTransaction()
-						.replace(R.id.frame_container, fragmentSecond).commit();
-
-			}
-			break;
-
+		} else {
+			Utils.showConnectivityToast(Utils.TYPE_NOT_CONNECTED, this);
 		}
 		lastClickedPosition = position;
 		mDrawerList.setItemChecked(position, true);
@@ -175,9 +180,13 @@ public class MainActivity extends Activity implements OnNavigationListener {
 		// TODO Auto-generated method stub
 		switch (item.getItemId()) {
 		case R.id.action_refresh:
-			item.setVisible(false);
-			displayView(lastClickedPosition,
-					navDrawerItems.get(lastClickedPosition).getId());
+			if(Utils.getConnectivityStatus(this) != Utils.TYPE_NOT_CONNECTED) {
+				item.setVisible(false);
+				displayView(lastClickedPosition,
+				navDrawerItems.get(lastClickedPosition).getId());
+			} else {
+				Utils.showConnectivityToast(Utils.TYPE_NOT_CONNECTED, this);
+			}
 		}
 		return super.onMenuItemSelected(featureId, item);
 	}
@@ -229,5 +238,6 @@ public class MainActivity extends Activity implements OnNavigationListener {
 		mTitle = title;
 		getActionBar().setTitle(mTitle);
 	}
+	
 
 }

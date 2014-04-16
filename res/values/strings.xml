@@ -10,5 +10,8 @@
     <string name="title_section3">Section 3</string>
     <string name="drawer_list_icon_description">Menu icon</string>
     <string name="user_photo_descriptor">User photo</string>
+    <string name="no_internet_connection">No internet connection</string>
+    <string name="valid_internet_connection">Successfully connected to the internet</string>
+    
 
 </resources>

@@ -3,14 +3,18 @@ package com.instatagger.utils;
 import java.io.InputStream;
 import java.io.OutputStream;
 
+import com.github.johnpersano.supertoasts.SuperToast;
+import com.github.johnpersano.supertoasts.util.Style;
+import com.instatagviewer.R;
+
 import android.content.Context;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 
 public class Utils {
-	public static int TYPE_WIFI = 1;
-	public static int TYPE_MOBILE = 2;
-	public static int TYPE_NOT_CONNECTED = 0;
+	public static final int TYPE_WIFI = 1;
+	public static final int TYPE_MOBILE = 2;
+	public static final int TYPE_NOT_CONNECTED = 0;
 
 	public static void CopyStream(InputStream is, OutputStream os) {
 		final int buffer_size = 1024;
@@ -45,12 +49,28 @@ public class Utils {
 		int conn = getConnectivityStatus(context);
 		String status = null;
 		if (conn == Utils.TYPE_WIFI) {
-			status = "Wifi enabled";
+			status = "Successfully connected to the internet";
 		} else if (conn == Utils.TYPE_MOBILE) {
-			status = "Mobile data enabled";
+			status = "Successfully connected to the internet";
 		} else if (conn == Utils.TYPE_NOT_CONNECTED) {
 			status = "Not connected to Internet";
 		}
 		return status;
+	}
+	public static void showConnectivityToast(int status, Context context) {
+	
+		switch(status) {
+		case Utils.TYPE_NOT_CONNECTED:
+			String message = context.getResources().getString(R.string.no_internet_connection);
+			SuperToast.create(context, message , SuperToast.Duration.SHORT, 
+				    Style.getStyle(Style.ORANGE, SuperToast.Animations.FLYIN)).show();
+			break;
+		default:
+			message = context.getResources().getString(R.string.valid_internet_connection);
+			SuperToast.create(context, message , SuperToast.Duration.SHORT, 
+				    Style.getStyle(Style.GREEN, SuperToast.Animations.FLYIN)).show();
+			break;
+		}
+			
 	}
 }
