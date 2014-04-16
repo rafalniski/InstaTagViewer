@@ -165,6 +165,12 @@ public class MainActivity extends Activity implements OnNavigationListener {
 				mDrawerList.setItemChecked(0, true);
 				mDrawerList.setSelection(0);
 			}
+		} else {
+			int savedPosition = savedInstanceState.getInt("lastPosition");
+			lastClickedPosition = savedPosition;
+			displayView(savedPosition, navDrawerItems.get(savedPosition).getId());
+			mDrawerList.setItemChecked(savedPosition, true);
+			mDrawerList.setSelection(savedPosition);
 		}
 	}
 
@@ -218,7 +224,12 @@ public class MainActivity extends Activity implements OnNavigationListener {
 		// Sync the toggle state after onRestoreInstanceState has occurred.
 		mDrawerToggle.syncState();
 	}
-
+	@Override
+	protected void onSaveInstanceState(Bundle outState) {
+		// TODO Auto-generated method stub
+		outState.putInt("lastPosition", lastClickedPosition);
+		super.onSaveInstanceState(outState);
+	}
 	@Override
 	public boolean onPrepareOptionsMenu(Menu menu) {
 		// if nav drawer is opened, hide the action item

@@ -22,7 +22,6 @@ import android.widget.AbsListView.OnScrollListener;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.GridView;
-import android.widget.Toast;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -37,7 +36,6 @@ import com.instatagger.JSONmodel.Pagination;
 import com.instatagger.JSONmodel.Standard_resolution;
 import com.instatagger.JSONmodel.Tags;
 import com.instatagger.fragments.adapters.StaggeredAdapter;
-import com.instatagger.utils.Utils;
 import com.instatagviewer.R;
 
 public class StaggeredFragment extends Fragment {
@@ -171,7 +169,6 @@ public class StaggeredFragment extends Fragment {
 	public StaggeredFragment() {
 
 	}
-
 	private boolean loadAPI() {
 		String url = nextUrl != null ? nextUrl
 				: "https://api.instagram.com/v1/tags/"
