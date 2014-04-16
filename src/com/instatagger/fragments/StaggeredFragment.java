@@ -36,6 +36,7 @@ import com.instatagger.JSONmodel.Pagination;
 import com.instatagger.JSONmodel.Standard_resolution;
 import com.instatagger.JSONmodel.Tags;
 import com.instatagger.fragments.adapters.StaggeredAdapter;
+import com.instatagger.utils.Utils;
 import com.instatagviewer.R;
 
 public class StaggeredFragment extends Fragment {
@@ -44,10 +45,17 @@ public class StaggeredFragment extends Fragment {
 		public void onErrorResponse(VolleyError error) {
 			if (isVisible()) {
 				getActivity().setProgressBarIndeterminateVisibility(false);
+				if(attemptCount < 1) {
+					Utils.showBadTagToast(getActivity());
+				}
 				if (attemptCount++ < 4) {
 					getActivity().setProgressBarIndeterminateVisibility(true);
-
 					loadAPI();
+				} else {
+					attemptCount = 0;
+					loadingMore = false;
+					getActivity().invalidateOptionsMenu();
+					
 				}
 			}
 		}

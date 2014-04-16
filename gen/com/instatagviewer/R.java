@@ -282,6 +282,7 @@ public final class R {
     public static final class string {
         public static final int add=0x7f070002;
         public static final int app_name=0x7f070001;
+        public static final int bad_tag=0x7f07000b;
         public static final int delete=0x7f070004;
         public static final int drawer_list_icon_description=0x7f070008;
         public static final int hello=0x7f070000;
@@ -291,7 +292,7 @@ public final class R {
         public static final int title_section2=0x7f070006;
         public static final int title_section3=0x7f070007;
         public static final int user_photo_descriptor=0x7f070009;
-        public static final int valid_internet_connection=0x7f07000b;
+        public static final int valid_internet_connection=0x7f07000c;
     }
     public static final class style {
         /** 

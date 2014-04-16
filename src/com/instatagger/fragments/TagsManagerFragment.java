@@ -192,10 +192,7 @@ public class TagsManagerFragment extends ListFragment {
 		public void onClick(DialogInterface dialog, int position) {
 
 			String value = editQuantity.getText().toString();
-			Log.d("Quantity: ", value);
-			if (value.indexOf("#") == 0) {
-				value = value.substring(1);
-			}
+			value = value.replaceAll("[^a-zA-Z0-9]", "");
 			onDialogClicked(value);
 			dialog.dismiss();
 		}

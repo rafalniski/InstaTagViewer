@@ -73,4 +73,12 @@ public class Utils {
 		}
 			
 	}
+	
+	public static void showBadTagToast(Context context) {
+		
+			String message = context.getResources().getString(R.string.bad_tag);
+			SuperToast.create(context, message , SuperToast.Duration.SHORT, 
+				    Style.getStyle(Style.ORANGE, SuperToast.Animations.FLYIN)).show();
+			
+	}
 }
