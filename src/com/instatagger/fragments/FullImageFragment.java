@@ -18,6 +18,7 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.text.method.ScrollingMovementMethod;
 import android.util.Log;
+import android.view.Display;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -165,10 +166,14 @@ public class FullImageFragment extends Fragment {
 		TextView likesText = (TextView) v.findViewById(R.id.likes);
 		TextView user_nickname = (TextView) v.findViewById(R.id.username);
 		TextView image_date = (TextView) v.findViewById(R.id.time);
+		TextView image_tags = (TextView) v.findViewById(R.id.tags);
 		location = (TextView) v.findViewById(R.id.location);
 		TextView user_full_name = (TextView) v.findViewById(R.id.full_name);
 		user_nickname.setText("@" + imageInfo.get("username"));
-
+		String tags = imageInfo.get("tags");
+		if(image_tags != null) {
+			image_tags.setText(tags);
+		}
 		user_full_name.setText(imageInfo.get("full_name"));
 		String creation_time = imageInfo.get("creation_date");
 		Log.d("long", imageInfo.get("creation_date") + "przeddupa");

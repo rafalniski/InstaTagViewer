@@ -30,6 +30,8 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.HttpClientStack;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
 import com.google.gson.Gson;
 import com.instatagger.R;
 import com.instatagger.JSONmodel.Datum;
@@ -98,6 +100,14 @@ public class StaggeredFragment extends Fragment {
 								.getUser().getProfile_picture() : "";
 						String text = item.getCaption() != null ? item
 								.getCaption().getText() : "";
+						List<String> imageTags = item.getTags();
+						StringBuilder imageTagsString = new StringBuilder();
+						for (String s : imageTags)
+							
+						{	imageTagsString.append("#");
+						    imageTagsString.append(s);
+						    imageTagsString.append(" ");
+						}
 						info.put("likes", likes);
 						info.put("creation_date", creation_date);
 						info.put("location", location);
@@ -105,6 +115,7 @@ public class StaggeredFragment extends Fragment {
 						info.put("full_name", full_name);
 						info.put("profile_picture", profile_picture);
 						info.put("text", text);
+						info.put("tags", imageTagsString.toString());
 						urls.add(res.getUrl());
 						imageInfo.add(info);
 						AllUrls.add(res.getUrl());
@@ -143,7 +154,7 @@ public class StaggeredFragment extends Fragment {
 				}
 				loadingMore = false;
 				getActivity().setProgressBarIndeterminateVisibility(false);
-				getActivity().invalidateOptionsMenu();
+				//getActivity().invalidateOptionsMenu();
 			}
 
 		}
@@ -204,7 +215,11 @@ public class StaggeredFragment extends Fragment {
 		// TODO Auto-generated method stub
 		super.onActivityCreated(savedInstanceState);
 		gridView = (GridView) getView().findViewById(R.id.staggeredGridView1);
-
+		
+		AdView adView = (AdView)getView().findViewById(R.id.adView);
+	    AdRequest adRequest = new AdRequest.Builder().build();
+	    adView.loadAd(adRequest);
+	    
 		// pBar.setVisibility(View.VISIBLE);
 		// gridView.setVisibility(View.GONE);
 		gridView.setOnItemClickListener(new OnItemClickListener() {

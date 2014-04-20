@@ -138,7 +138,7 @@ public class MainActivity extends Activity implements OnNavigationListener {
 			public void onDrawerClosed(View view) {
 				// getActionBar().setTitle(mDrawerTitle);
 				// calling onPrepareOptionsMenu() to show action bar icons
-				invalidateOptionsMenu();
+				 invalidateOptionsMenu();
 			}
 
 			@Override
@@ -148,7 +148,7 @@ public class MainActivity extends Activity implements OnNavigationListener {
 				mDrawerList.setSelection(lastClickedPosition);
 				// getActionBar().setTitle(mDrawerTitle);
 				// calling onPrepareOptionsMenu() to hide action bar icons
-				invalidateOptionsMenu();
+				 invalidateOptionsMenu();
 			}
 		};
 		mDrawerLayout.setDrawerListener(mDrawerToggle);
@@ -178,6 +178,7 @@ public class MainActivity extends Activity implements OnNavigationListener {
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// Inflate the menu; this adds items to the action bar if it is present.
+		super.onCreateOptionsMenu(menu);
 		getMenuInflater().inflate(R.menu.main, menu);
 		return true;
 	}

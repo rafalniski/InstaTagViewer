@@ -1,11 +1,17 @@
 
 
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:ads="http://schemas.android.com/apk/res-auto"
     android:id="@+id/content"
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     >
+    <com.google.android.gms.ads.AdView android:id="@+id/adView"
+                         android:layout_width="wrap_content"
+                         android:layout_height="wrap_content"
+                         ads:adUnitId="MY_AD_UNIT_ID"
+                         ads:adSize="SMART_BANNER"/>
    <GridView
        android:id="@+id/staggeredGridView1"
        android:layout_width="match_parent"

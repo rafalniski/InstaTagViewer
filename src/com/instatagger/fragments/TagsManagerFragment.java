@@ -105,7 +105,7 @@ public class TagsManagerFragment extends ListFragment {
 		super.onPrepareOptionsMenu(menu);
 		menu.findItem(R.id.action_add).setVisible(true);
 		menu.findItem(R.id.action_refresh).setVisible(false);
-		getActivity().invalidateOptionsMenu();
+		//getActivity().invalidateOptionsMenu();
 	}
 
 	public void onDialogClicked(String value) {
