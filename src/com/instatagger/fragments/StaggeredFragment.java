@@ -12,7 +12,6 @@ import android.app.Fragment;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.View;
@@ -48,7 +47,11 @@ public class StaggeredFragment extends Fragment {
 			if (isVisible()) {
 				getActivity().setProgressBarIndeterminateVisibility(false);
 				if(attemptCount < 1) {
-					Utils.showBadTagToast(getActivity());
+					if(Utils.getConnectivityStatus(getActivity()) == Utils.TYPE_NOT_CONNECTED) {
+						Utils.showConnectivityToast(Utils.TYPE_NOT_CONNECTED, getActivity());
+					} else {
+						Utils.showBadTagToast(getActivity());
+					}
 				}
 				if (attemptCount++ < 4) {
 					getActivity().setProgressBarIndeterminateVisibility(true);
@@ -142,8 +145,6 @@ public class StaggeredFragment extends Fragment {
 						((StaggeredAdapter) gridView.getAdapter())
 								.notifyDataSetChanged();
 					} else if (gridView.getAdapter() == null) {
-						Log.d("grdiviewgetadapternull",
-								"Wywolano to co nie powinno sie wywolac:)");
 						getActivity().setProgressBarIndeterminateVisibility(
 								true);
 						adapter = new StaggeredAdapter(getActivity(),
@@ -188,6 +189,7 @@ public class StaggeredFragment extends Fragment {
 	public StaggeredFragment() {
 
 	}
+	
 	private boolean loadAPI() {
 		String url = nextUrl != null ? nextUrl
 				: "https://api.instagram.com/v1/tags/"
@@ -217,7 +219,10 @@ public class StaggeredFragment extends Fragment {
 		gridView = (GridView) getView().findViewById(R.id.staggeredGridView1);
 		
 		AdView adView = (AdView)getView().findViewById(R.id.adView);
-	    AdRequest adRequest = new AdRequest.Builder().build();
+	    AdRequest adRequest = new AdRequest.Builder()
+	    	.addTestDevice(AdRequest.DEVICE_ID_EMULATOR)
+	    	.addTestDevice("10B168945C3EE6E44286D35F408BB019")
+	    	.build();
 	    adView.loadAd(adRequest);
 	    
 		// pBar.setVisibility(View.VISIBLE);
@@ -227,8 +232,6 @@ public class StaggeredFragment extends Fragment {
 			@Override
 			public void onItemClick(AdapterView<?> parent, View view,
 					int position, long id) {
-				Log.d("click", "Position: " + position + " ID: " + id
-						+ "Item: " + adapter.getItem(position));
 				Intent intent = new Intent(getActivity(),
 						ViewPagerFragment.class);
 				intent.putStringArrayListExtra("urls", AllUrls);
@@ -247,9 +250,7 @@ public class StaggeredFragment extends Fragment {
 					if ((lastInScreen == (totalItemCount - 12)) && !(loadingMore)
 							&& lastInScreen > 0) {
 						if (stopLoadingData == false) {
-							Log.d("trace", "First: " + firstVisibleItem
-									+ " visible: " + visibleItemCount + "total: "
-									+ totalItemCount + " last:" + lastInScreen);
+							
 							loadingMore = true;
 							getActivity().setProgressBarIndeterminateVisibility(
 									true);

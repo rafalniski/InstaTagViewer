@@ -49,11 +49,11 @@ public class Utils {
 		int conn = getConnectivityStatus(context);
 		String status = null;
 		if (conn == Utils.TYPE_WIFI) {
-			status = "Successfully connected to the internet";
+			status = context.getString(R.string.success);
 		} else if (conn == Utils.TYPE_MOBILE) {
-			status = "Successfully connected to the internet";
+			status = context.getString(R.string.success);
 		} else if (conn == Utils.TYPE_NOT_CONNECTED) {
-			status = "Not connected to Internet";
+			status = context.getString(R.string.fail_internet);
 		}
 		return status;
 	}

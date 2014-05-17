@@ -21,7 +21,7 @@ public class ViewPagerFragment extends FragmentActivity {
 	private ArrayList<HashMap<String, String>> imageInfo;
 	public ViewPagerFragment() {
 	}
-
+ 
 	FullImageAdapter mAdapter;
 
 	@Override
@@ -29,6 +29,7 @@ public class ViewPagerFragment extends FragmentActivity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.view_pager);
 		getActionBar().setDisplayHomeAsUpEnabled(true);
+		getActionBar().setDisplayShowHomeEnabled(false);
 		urls = getIntent().getExtras().getStringArrayList("urls");
 		position = getIntent().getExtras().getInt("position");
 		imageInfo = (ArrayList<HashMap<String, String>>) getIntent().getSerializableExtra("imageInfo");

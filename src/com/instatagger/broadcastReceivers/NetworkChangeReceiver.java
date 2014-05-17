@@ -12,7 +12,7 @@ public class NetworkChangeReceiver extends BroadcastReceiver {
 
 		int status = Utils.getConnectivityStatus(context);
 		if(status != Utils.TYPE_NOT_CONNECTED) {
-			Utils.showConnectivityToast(status, context);
+			//Utils.showConnectivityToast(status, context);
 		}
 	}
 }

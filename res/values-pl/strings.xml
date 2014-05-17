@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="add">Dodaj</string>
+    <string name="refresh">Odśwież</string>
+    <string name="delete">Usuń</string>
+    <string name="app_name">InstaTagger</string>
+    <string name="title_section1">Section 1</string>
+    <string name="title_section2">Section 2</string>
+    <string name="title_section3">Section 3</string>
+    <string name="success">Połączono z internetem</string>
+    <string name="manage_tags">Zarządzaj tagami</string>
+    
+    <string name="fail_internet">Utracono połączenie z internetem</string>
+    <string name="drawer_list_icon_description">Ikona menu</string>
+    <string name="user_photo_descriptor">Zdjęcie użytkownika</string>
+    <string name="no_internet_connection">Brak połączenia z internetem</string>
+    <string name="bad_tag">Niestety, ten tag nie istnieje lub jest zabroniony.</string>
+    <string name="please_enter_tag_name">Proszę, wypełnij nazwę tagu</string>
+    <string name="empty_tag">Proszę, wpisz nazwę tagu</string>
+    <string name="add_tag">Dodaj</string>
+     <string name="cancel">Anuluj</string>
+    
+    <string name="valid_internet_connection">Połączono z internetem</string>
+    
+
+</resources>

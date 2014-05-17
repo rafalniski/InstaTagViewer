@@ -25,7 +25,6 @@ public class StaggeredAdapter extends ArrayAdapter<String> {
 
 	@Override
 	public View getView(int position, View convertView, ViewGroup parent) {
-		long start = System.currentTimeMillis();
 		ViewHolder holder;
 
 		if (convertView == null) {
@@ -40,8 +39,6 @@ public class StaggeredAdapter extends ArrayAdapter<String> {
 
 		holder = (ViewHolder) convertView.getTag();
 		mLoader.DisplayImage(getItem(position), holder.imageView);
-		long elapsedTimeMillis = System.currentTimeMillis() - start;
-		Log.d("czas", "Czas wykonania: " + elapsedTimeMillis / 1000F);
 		return convertView;
 	}
 

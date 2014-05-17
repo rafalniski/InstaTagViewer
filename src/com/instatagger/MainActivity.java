@@ -1,5 +1,6 @@
 package com.instatagger;
 
+import com.crashlytics.android.Crashlytics;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -40,7 +41,7 @@ public class MainActivity extends Activity implements OnNavigationListener {
 	private ActionBarDrawerToggle mDrawerToggle;
 	private CharSequence mTitle;
 	private ArrayList<NavigationDrawerItem> navDrawerItems;
-
+	
 	private ArrayList<String> navMenuTitles;
 	private class SlideMenuClickListener implements ListView.OnItemClickListener {
 		@Override
@@ -88,8 +89,8 @@ public class MainActivity extends Activity implements OnNavigationListener {
 		db.open();
 		List<TagsContract> tags = db.getAllTasks();
 		navDrawerItems = new ArrayList<NavigationDrawerItem>();
-		navMenuTitles.add("Manage Tags");
-		navDrawerItems.add(new NavigationDrawerItem("Manage Tags",
+		navMenuTitles.add(getString(R.string.manage_tags));
+		navDrawerItems.add(new NavigationDrawerItem(getString(R.string.manage_tags),
 				R.drawable.edittags, 0));
 		for (TagsContract tag : tags) {
 			navMenuTitles.add(tag.getTitle());
@@ -122,13 +123,17 @@ public class MainActivity extends Activity implements OnNavigationListener {
 		// TODO Auto-generated method stub
 		requestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
 		super.onCreate(savedInstanceState);
+		Crashlytics.start(this);
 		setContentView(R.layout.activity_main);
 		ParseAnalytics.trackAppOpened(getIntent());
 		initDrawer();
 
 		// enabling action bar app icon and behaving it as toggle button
 		getActionBar().setDisplayHomeAsUpEnabled(true);
+		//getActionBar().setDisplayShowHomeEnabled(false);
 		// getActionBar().setHomeButtonEnabled(true);
+	    getActionBar().setIcon(android.R.color.transparent);
+
 		getActionBar().setBackgroundDrawable(
 				new ColorDrawable(Colour.crimsonColor()));
 		mDrawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout,

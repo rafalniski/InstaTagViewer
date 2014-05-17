@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.instatagger"
-    android:versionCode="1"
+    android:versionCode="2"
     android:versionName="1.0" >
 
     <uses-sdk
@@ -11,11 +11,6 @@
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.WRITE_INTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-    <uses-permission android:name="android.permission.INTERNET" />
-	<uses-permission android:name="android.permission.WAKE_LOCK" />
-	<uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
-	<uses-permission android:name="android.permission.VIBRATE" />
-	<uses-permission android:name="android.permission.GET_ACCOUNTS" />
 	<uses-permission android:name="com.google.android.c2dm.permission.RECEIVE" />
 
     <permission android:protectionLevel="signature"
@@ -23,7 +18,7 @@
     <uses-permission android:name="com.instatagger.permission.C2D_MESSAGE" />
     <application
         android:allowBackup="true"
-        android:icon="@drawable/ic_launcher"
+        android:icon="@drawable/icon"
         android:label="@string/app_name"
         android:theme="@style/AppTheme"
         android:name="com.instatagger.MyApplication" >
@@ -47,12 +42,6 @@
             </intent-filter>
         </activity>
          <activity android:name="com.instatagger.fragments.ViewPagerFragment"/>
-        <activity android:name="com.instatagger.ImageActivity"
-            >
-            <meta-data
-            android:name="android.support.PARENT_ACTIVITY"
-            android:value="com.instatagviewer.MainActivity" />
-            </activity>
             <service android:name="com.parse.PushService" />
 		<receiver android:name="com.parse.ParseBroadcastReceiver">
 		  <intent-filter>
@@ -74,6 +63,7 @@
 		</receiver>
 		 <activity android:name="com.google.android.gms.ads.AdActivity"
              android:configChanges="keyboard|keyboardHidden|orientation|screenLayout|uiMode|screenSize|smallestScreenSize"/>
+        <meta-data android:name="com.crashlytics.ApiKey" android:value="5a8941d5f7a47b1319592d5517fc3399a92fffc2"/>
     </application>
 
 </manifest>

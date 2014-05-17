@@ -60,7 +60,7 @@ public class DatabaseDataModel {
 	public List<TagsContract> getAllTasks() {
 		List<TagsContract> tags = new ArrayList<TagsContract>();
 		Cursor cursor = database.query(TagEntry.TABLE_NAME, tagColumns, null,
-				null, null, null, null);
+				null, null, null,TagEntry._ID + " DESC");
 		cursor.moveToFirst();
 		while (!cursor.isAfterLast()) {
 			TagsContract task = cursorToTag(cursor);
@@ -74,7 +74,7 @@ public class DatabaseDataModel {
 
 	public Cursor getAllTasksInCursor() {
 		Cursor cursor = database.query(TagEntry.TABLE_NAME, tagColumns, null,
-				null, null, null, null);
+				null, null, null, TagEntry._ID + " DESC");
 		cursor.moveToFirst();
 		return cursor;
 	}

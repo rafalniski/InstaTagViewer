@@ -10,6 +10,7 @@
     <string name="title_section3">Section 3</string>
     <string name="success">Successfully connected to the internet</string>
     <string name="manage_tags">Manage Tags</string>
+    
     <string name="fail_internet">Not connected to Internet</string>
     <string name="drawer_list_icon_description">Menu icon</string>
     <string name="user_photo_descriptor">User photo</string>
@@ -19,6 +20,7 @@
     <string name="empty_tag">Please, fill it with any text</string>
     <string name="add_tag">Add</string>
      <string name="cancel">Cancel</string>
+    
     <string name="valid_internet_connection">Successfully connected to the internet</string>
     
 

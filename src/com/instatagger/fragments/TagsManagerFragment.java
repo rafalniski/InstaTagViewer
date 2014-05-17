@@ -93,7 +93,6 @@ public class TagsManagerFragment extends ListFragment {
 	public boolean onOptionsItemSelected(MenuItem item) {
 		switch (item.getItemId()) {
 		case R.id.action_add:
-			Log.d("lol", "Klliknieto add.");
 			QuantityDialogFragment dialog = new QuantityDialogFragment();
 			dialog.show(getFragmentManager(), "Dialog");
 		}
@@ -184,9 +183,9 @@ public class TagsManagerFragment extends ListFragment {
 
 			return new AlertDialog.Builder(getActivity())
 					.setTitle(R.string.app_name)
-					.setMessage("Please Enter tag name")
-					.setPositiveButton("ADD", this)
-					.setNegativeButton("CANCEL", null).setView(editQuantity)
+					.setMessage(getString(R.string.please_enter_tag_name))
+					.setPositiveButton(getString(R.string.add_tag), this)
+					.setNegativeButton(getString(R.string.cancel), null).setView(editQuantity)
 					.create();
 
 		}

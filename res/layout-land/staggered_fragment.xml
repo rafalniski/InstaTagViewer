@@ -4,19 +4,21 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:paddingTop="?android:attr/actionBarSize"
     >
-    <com.google.android.gms.ads.AdView android:id="@+id/adView"
-                         android:layout_width="wrap_content"
-                         android:layout_height="wrap_content"
-                         ads:adUnitId="MY_AD_UNIT_ID"
-                         ads:adSize="SMART_BANNER"/>
+    <com.google.android.gms.ads.AdView
+        android:id="@+id/adView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        ads:adUnitId="ca-app-pub-2005055540776071/8970733941"
+        ads:adSize="SMART_BANNER" />
    <GridView
        android:id="@+id/staggeredGridView1"
        android:layout_width="match_parent"
        android:layout_height="match_parent"
        android:numColumns="4"
        android:scrollingCache="true"
-       android:paddingTop="?android:attr/actionBarSize">
+       >
 
     </GridView>
     

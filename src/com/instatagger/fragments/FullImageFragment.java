@@ -17,7 +17,6 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.text.method.ScrollingMovementMethod;
-import android.util.Log;
 import android.view.Display;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -25,6 +24,8 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
 import com.instatagger.R;
 import com.instatagger.utils.ImageLoader;
 import com.mattyork.colours.Colour;
@@ -63,8 +64,6 @@ public class FullImageFragment extends Fragment {
 				addresses = geocoder.getFromLocation(loc.getLatitude(),
 						loc.getLongitude(), 1);
 			} catch (IOException e1) {
-				Log.e("LocationSampleActivity",
-						"IO Exception in getFromLocation()");
 				e1.printStackTrace();
 				return ("IO Exception trying to get address");
 			} catch (IllegalArgumentException e2) {
@@ -73,7 +72,6 @@ public class FullImageFragment extends Fragment {
 						+ Double.toString(loc.getLatitude()) + " , "
 						+ Double.toString(loc.getLongitude())
 						+ " passed to address service";
-				Log.e("LocationSampleActivity", errorString);
 				e2.printStackTrace();
 				return errorString;
 			}
@@ -99,7 +97,7 @@ public class FullImageFragment extends Fragment {
 				// Return the text
 				return addressText;
 			} else {
-				return "No address found";
+				return "";
 			}
 		}
 
@@ -176,9 +174,7 @@ public class FullImageFragment extends Fragment {
 		}
 		user_full_name.setText(imageInfo.get("full_name"));
 		String creation_time = imageInfo.get("creation_date");
-		Log.d("long", imageInfo.get("creation_date") + "przeddupa");
 		if (!creation_time.isEmpty()) {
-			Log.d("long", imageInfo.get("creation_date") + "dupa");
 			likesText.setText("Likes: " + imageInfo.get("likes"));
 			Date currentDate = new Date(Long.parseLong(imageInfo
 					.get("creation_date")) * 1000);
@@ -187,15 +183,11 @@ public class FullImageFragment extends Fragment {
 			imageText.setMovementMethod(new ScrollingMovementMethod());
 			imageText.setText(imageInfo.get("text"));
 		}
-		Log.d("info", "Info: Likes: " + imageInfo.get("likes") + " Username: "
-				+ imageInfo.get("username"));
 
 		mLoader.DisplayImage(imageUrl, image);
 		mLoader.DisplayImage(imageInfo.get("profile_picture"), user_image);
 		String location = imageInfo.get("location");
-		Log.d("loca", "Raw location: " + location);
 		if (location.length() > 20 && location.length() < 50) {
-			Log.d("loca", location);
 			location = location.substring(1, location.length() - 1);
 			Location mLocation = new Location("");
 			String[] loc = location.split(",");
@@ -210,7 +202,6 @@ public class FullImageFragment extends Fragment {
 			} else {
 				latitude = Double.parseDouble(loc[1].substring(10));
 			}
-			Log.d("loca", "Lon:'" + longitude + "'Lat:'" + latitude + "'");
 			mLocation.setLatitude(latitude);
 			mLocation.setLongitude(longitude);
 			new GetAddressTask(getActivity()).execute(mLocation);
